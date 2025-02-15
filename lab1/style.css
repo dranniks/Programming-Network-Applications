@@ -61,7 +61,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     background-image: url('bg.jpg');
     background-position: center;
@@ -110,6 +110,7 @@ body {
   background-color: #000000;
   color: white;
 }
+
 .theme-toggle:checked ~ .calculator-container, .theme-toggle:checked ~ .github-button, 
 .theme-toggle:checked ~ .dropdown-menu, .theme-toggle:checked ~ .dropdown-menu,
 .theme-toggle:checked ~ .collapse-block p, .theme-toggle:checked ~ .collapse-block, 
