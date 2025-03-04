@@ -87,4 +87,15 @@ window.onload = function(){
     
         outputElement.innerHTML = a
     }
+
+    document.getElementById("btn_op_percent").onclick = function() {
+        if (a === '') return
+
+        expressionResult = 220 / (+a) 
+        a = expressionResult.toString()
+        b = ''
+        selectedOperation = null
+    
+        outputElement.innerHTML = a
+    }
 };
