@@ -10,6 +10,11 @@
     font-size: 30px;
     font-weight: 800;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 15px;
+    white-space: nowrap;
 }
 
 body {
@@ -36,6 +41,8 @@ body {
     display: flex;
     flex-direction: column; /* Элементы в колонку */
     align-items: center; /* Центрирование по горизонтали */
+
+
 }
 
 .options {
@@ -140,4 +147,9 @@ mark.neon {
     padding: 1px 8px;
     border: 1px solid #b48ef0;
     border-radius: 3px;
+}
+
+
+.engineering-hidden {
+    display: none;
 }
