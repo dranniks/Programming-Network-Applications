@@ -5,18 +5,21 @@ window.onload = function() {
     let selectedOperation = null
     let outputElement = document.getElementById("result")
     let digitButtons = document.querySelectorAll('[id ^= "btn_digit_"]')
-    let bgColors = ['#ffffff', '#ffe4e1', '#f0fff0', '#f0f8ff']
-    let currentBgColorIndex = 0
-    let outputColors = ['#ffffff', '#fff0f5', '#e6e6fa', '#f5f5dc']
-    let currentOutputColorIndex = 0
     let maxDigits = 10;
+    let lastB = null;
+    let newInputExpected = false;
+  
 
     function onDigitButtonClicked(digit) {
+        if (newInputExpected && selectedOperation) {
+            b = '';
+            newInputExpected = false;
+        }
+    
         const current = selectedOperation ? b : a;
         
         if (current.length >= maxDigits) return;
         
-        // Обработка 000
         if (digit === '000') {
             if (current.indexOf('.') !== -1) return;
             if (current === '') digit = '0';
@@ -46,8 +49,10 @@ window.onload = function() {
         selectedOperation = 'x'
     }
     document.getElementById("btn_op_plus").onclick = function() { 
-        if (a === '') return
-        selectedOperation = '+'
+        if (a === '') return;
+        selectedOperation = '+';
+        newInputExpected = false;
+        lastB = null; // Сбрасываем сохраненный операнд при выборе новой операции
     }
     document.getElementById("btn_op_minus").onclick = function() { 
         if (a === '') return
@@ -68,19 +73,28 @@ window.onload = function() {
 
     // Равно
     document.getElementById("btn_op_equal").onclick = function() { 
-        if (a === '' || b === '' || !selectedOperation) return
-            
-        switch(selectedOperation) { 
-            case 'x': expressionResult = (+a) * (+b); break
-            case '+': expressionResult = (+a) + (+b); break
-            case '-': expressionResult = (+a) - (+b); break
-            case '/': expressionResult = (+a) / (+b); break
+        if (a === '' || !selectedOperation) return;
+        
+        // Используем сохраненное значение если новое не введено
+        if (b === '' && lastB !== null) {
+            b = lastB;
+        } else if (b === '') {
+            return;
         }
         
-        a = expressionResult.toString()
-        b = ''
-        selectedOperation = null
-        outputElement.innerHTML = a
+        switch(selectedOperation) { 
+            case 'x': expressionResult = (+a) * (+b); break;
+            case '+': expressionResult = (+a) + (+b); break;
+            case '-': expressionResult = (+a) - (+b); break;
+            case '/': expressionResult = (+a) / (+b); break;
+        }
+        
+        a = expressionResult.toString();
+        lastB = b; // Сохраняем последний операнд
+        b = '';
+        newInputExpected = true;
+        
+        outputElement.innerHTML = a;
     }
 
     // Смена знака
@@ -117,10 +131,10 @@ window.onload = function() {
     }
 
     // Смена цвета фона
-    document.getElementById("btn_change_bg").onclick = function() {
-        currentBgColorIndex = (currentBgColorIndex + 1) % bgColors.length
-        document.body.style.backgroundColor = bgColors[currentBgColorIndex]
-    }
+    document.getElementById('theme').addEventListener('click', function() {
+        const body = document.body;
+        body.classList.toggle('dark-theme');
+    });
 
     // Квадратный корень
     document.getElementById("btn_op_sqrt").onclick = function() {
@@ -166,19 +180,10 @@ window.onload = function() {
     }
 
     // Смена цвета вывода
-    document.getElementById("btn_change_output").onclick = function() {
-        currentOutputColorIndex = (currentOutputColorIndex + 1) % outputColors.length
-        outputElement.style.backgroundColor = outputColors[currentOutputColorIndex]
-    }
-
-    // Индивидуальная операция (x³)
-    document.getElementById("btn_op_cube").onclick = function() {
-        const num = selectedOperation ? parseFloat(b) : parseFloat(a)
-        const result = (num ** 3).toString()
-        if (selectedOperation) b = result
-        else a = result
-        outputElement.innerHTML = result
-    }
+    document.getElementById('btn_change_output').addEventListener('click', function() {
+        const body = document.body;
+        body.classList.toggle('change-color');
+    });
 
     document.querySelector('.dropdown-menu').onchange = function() {
         const isEngineeringMode = this.value === "Инженерный";
@@ -201,4 +206,21 @@ window.onload = function() {
         selectedOperation = null;
         outputElement.innerHTML = '0';
     };
+
+    document.getElementById("btn_op_I").onclick = function() {
+        const num = selectedOperation ? parseFloat(b) : parseFloat(a);
+        
+        // Проверка на ноль
+        if (num === 0) {
+            outputElement.innerHTML = "Ошибка: Деление на ноль";
+            return;
+        }
+    
+        let result = (220 / num).toString(); // Используем num вместо result
+        if (selectedOperation) b = result; // Сохраняем результат в b или a
+        else a = result;
+    
+        outputElement.innerHTML = result; // Выводим результат
+    }
+    
 }
