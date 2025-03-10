@@ -179,7 +179,7 @@ window.onload = function() {
         outputElement.innerHTML = result
     }
 
-    // Смена цвета вывода
+    // Смена цвета окна результата
     document.getElementById('btn_change_output').addEventListener('click', function() {
         const body = document.body;
         body.classList.toggle('change-color');

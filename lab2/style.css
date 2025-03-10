@@ -186,3 +186,7 @@ body.dark-theme .options {
     color: #000000; 
 }
 
+body.dark-theme mark.neon {
+    background: #ffffff;
+    color: #000000; 
+}
