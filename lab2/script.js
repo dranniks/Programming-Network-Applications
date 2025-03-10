@@ -190,18 +190,15 @@ window.onload = function() {
 
         maxDigits = isEngineeringMode ? 15 : 10;
         
-        // Переключаем видимость инженерных кнопок
         document.querySelectorAll('.engineering-hidden').forEach(btn => {
             btn.style.display = isEngineeringMode ? 'inline-block' : 'none';
         });
     
-        // Меняем размер калькулятора
         const calculator = document.querySelector(".calculator-container");
         const resultDisplay = document.querySelector(".result");
         calculator.style.width = isEngineeringMode ? "452px" : "252px";
         resultDisplay.style.width = isEngineeringMode ? "412px" : "242px";
     
-        // Сбрасываем состояние калькулятора
         a = b = '';
         selectedOperation = null;
         outputElement.innerHTML = '0';
@@ -216,11 +213,14 @@ window.onload = function() {
             return;
         }
     
-        let result = (220 / num).toString(); // Используем num вместо result
-        if (selectedOperation) b = result; // Сохраняем результат в b или a
+        let result = (220 / num).toString();
+        if (selectedOperation) b = result;
         else a = result;
     
-        outputElement.innerHTML = result; // Выводим результат
+        outputElement.innerHTML = result;
     }
-    
+
+    document.querySelector('.github').onclick = function() {
+        window.open('https://github.com/dranniks/Programming-Network-Applications', '_blank'); 
+    }
 }
