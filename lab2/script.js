@@ -52,7 +52,7 @@ window.onload = function() {
         if (a === '') return;
         selectedOperation = '+';
         newInputExpected = false;
-        lastB = null; // Сбрасываем сохраненный операнд при выборе новой операции
+        lastB = null;
     }
     document.getElementById("btn_op_minus").onclick = function() { 
         if (a === '') return
@@ -205,20 +205,15 @@ window.onload = function() {
     };
 
     document.getElementById("btn_op_I").onclick = function() {
-        const num = selectedOperation ? parseFloat(b) : parseFloat(a);
-        
-        // Проверка на ноль
-        if (num === 0) {
+        if (a === 0) {
             outputElement.innerHTML = "Ошибка: Деление на ноль";
             return;
         }
-    
-        let result = (220 / num).toString();
-        if (selectedOperation) b = result;
-        else a = result;
-    
+        let result = (220 / a).toString();
+        a = result;
         outputElement.innerHTML = result;
     }
+
 
     document.querySelector('.github').onclick = function() {
         window.open('https://github.com/dranniks/Programming-Network-Applications', '_blank'); 
