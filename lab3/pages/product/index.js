@@ -1,6 +1,9 @@
 import { ProductComponent } from "../../components/product/index.js";
 import {BackButtonComponent} from "../../components/back-button/index.js";
 import {MainPage} from "../main/index.js";
+import eth_data from "../main/index.js";
+
+
 
 export class ProductPage {
     constructor(parent, id) {
@@ -9,12 +12,9 @@ export class ProductPage {
     }
 
     getData() {
-        return {
-            id: 1,
-            src: "https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg",
-            title: `Акция ${this.id}`,
-            text: "Такой акции вы еще не видели"
-        }
+        const mainPage = new MainPage();
+        const data = mainPage.getData();
+        return data.find(item => item.id == this.id);
     }
 
     get pageRoot() {
@@ -43,7 +43,7 @@ export class ProductPage {
         backButton.render(this.clickBack.bind(this))
     
         const data = this.getData()
-        const stock = new ProductComponent(this.pageRoot)
-        stock.render(data)
+        const product = new ProductComponent(this.pageRoot);
+        product.render(data);
     }
 }
