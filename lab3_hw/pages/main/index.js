@@ -243,13 +243,13 @@ export class MainPage {
                 const productCard = new L2CardComponent(cardContainer);
                 productCard.render(item, this.clickCard.bind(this));
             });
-    
-            // Всегда добавляем кнопку после карточек
+            
             const addButton = new AddButtonComponet(cardContainer);
             addButton.render(this.addL2Card.bind(this));
         };
     
         searchInput.addEventListener("input", renderAll);
+        
         document.addEventListener("delete-card", (event) => {
             eth_data = eth_data.filter(card => card.id !== event.detail);
             renderAll();
