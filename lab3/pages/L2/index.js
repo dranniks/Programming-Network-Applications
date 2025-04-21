@@ -1,11 +1,11 @@
-import { ProductComponent } from "../../components/product/index.js";
+import { L2Component } from "../../components/L2/index.js";
 import {BackButtonComponent} from "../../components/back-button/index.js";
 import {MainPage} from "../main/index.js";
 import eth_data from "../main/index.js";
 
 
 
-export class ProductPage {
+export class L2Page {
     constructor(parent, id) {
         this.parent = parent
         this.id = id
@@ -43,7 +43,7 @@ export class ProductPage {
         backButton.render(this.clickBack.bind(this))
     
         const data = this.getData()
-        const product = new ProductComponent(this.pageRoot);
+        const product = new L2Component(this.pageRoot);
         product.render(data);
     }
 }

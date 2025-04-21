@@ -1,5 +1,5 @@
-import {ProductPage} from "../product/index.js";
-import { ProductCardComponent } from "../../components/product-card/index.js";
+import {L2Page} from "../L2/index.js";
+import { L2CardComponent } from "../../components/L2-card/index.js";
 import { AddButtonComponet } from "../../components/add-button/index.js";
 
 let eth_data = [
@@ -154,11 +154,11 @@ export class MainPage {
     clickCard(e) {
         const cardId = e.target.dataset.id
     
-        const productPage = new ProductPage(this.parent, cardId)
+        const productPage = new L2Page(this.parent, cardId)
         productPage.render()
     }
 
-    addCard() {
+    addL2Card() {
         const newId = Math.max(...eth_data.map(c => c.id), 0) + 1;
         const newCard = {
             id: newId,
@@ -177,27 +177,27 @@ export class MainPage {
         this.render();
     }
 
-    findAnagrams() {
-        const titles = eth_data.map(item => item.title);
+    findL2Anagrams() {
+        const L2titles = eth_data.map(item => item.title);
         
-        const groups = {};
+        const L2groups = {};
         
-        for (const title of titles) {
-            const normalized = title.replace(/\s+/g, '').toLowerCase();
-            const key = [...normalized].sort().join('');
+        for (const L2title of L2titles) {
+            const L2normalized = L2title.replace(/\s+/g, '').toLowerCase();
+            const L2key = [...L2normalized].sort().join('');
             
-            if (!groups[key]) {
-                groups[key] = [];
+            if (!L2groups[L2key]) {
+                L2groups[L2key] = [];
             }
-            groups[key].push(title);
+            L2groups[L2key].push(L2title);
         }
         
-        const result = Object.values(groups)
-            .filter(group => group.length >= 2)
-            .map(group => group.sort())
+        const L2result = Object.values(L2groups)
+            .filter(L2group => L2group.length >= 2)
+            .map(L2group => L2group.sort())
             .sort((a, b) => a[0].localeCompare(b[0]));
         
-        return result;
+        return L2result;
     }
 
     render() {
@@ -205,9 +205,9 @@ export class MainPage {
         const html = this.getHTML();
         this.parent.insertAdjacentHTML('beforeend', html);
     
-        const anagramButton = document.createElement('button');
-        anagramButton.textContent = 'Find Anagrams';
-        anagramButton.style.cssText = `
+        const L2anagramButton = document.createElement('button');
+        L2anagramButton.textContent = 'Find L2 Anagrams';
+        L2anagramButton.style.cssText = `
             padding: 10px 15px;
             background: #b48ef0;
             color: #000;
@@ -217,15 +217,15 @@ export class MainPage {
             font-weight: bold;
             margin-left: 10px;
         `;
-        document.querySelector('.controls').appendChild(anagramButton);
+        document.querySelector('.controls').appendChild(L2anagramButton);
 
-        anagramButton.addEventListener('click', () => {
-            const anagrams = this.findAnagrams();
-            if (anagrams.length > 0) {
-                alert('Найдены анаграммы:\n' + 
-                    anagrams.map(group => group.join(' ↔ ')).join('\n'));
+        L2anagramButton.addEventListener('click', () => {
+            const L2anagrams = this.findL2Anagrams();
+            if (L2anagrams.length > 0) {
+                alert('Найдены L2 анаграммы:\n' + 
+                    L2anagrams.map(L2group => L2group.join(' ↔ ')).join('\n'));
             } else {
-                alert('Анаграммы среди названий сетей не найдены');
+                alert('L2 анаграммы среди названий сетей не найдены');
             }
         });
 
@@ -240,13 +240,13 @@ export class MainPage {
             ) : eth_data;
             
             data.forEach((item) => {
-                const productCard = new ProductCardComponent(cardContainer);
+                const productCard = new L2CardComponent(cardContainer);
                 productCard.render(item, this.clickCard.bind(this));
             });
     
             // Всегда добавляем кнопку после карточек
             const addButton = new AddButtonComponet(cardContainer);
-            addButton.render(this.addCard.bind(this));
+            addButton.render(this.addL2Card.bind(this));
         };
     
         searchInput.addEventListener("input", renderAll);
